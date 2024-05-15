@@ -1,0 +1,4 @@
+
+
+para conectar python con arduino desde el serial:
+    -pip install pyserial

@@ -1,0 +1,40 @@
+
+T-Means
+    -Abstract
+    -Índice
+    -1. Introducción
+        Machine Learning
+            -Aprendizaje No Supervisado
+                -Clustering
+        -Smart Tiny Devices / Dispositivos de bajos recursos o recursos limitados
+        TinyML
+        Online Learning (TinyOL)
+        Objetivos
+            Propuesta: Sistema de clustering embebido en dispositivos de recursos limitados
+                Estudio del estado del arte.
+                Diseñar y modelar nuestra nueva propuesta.
+                Implementación con tecnologías de Clustering y TinyML.
+                Experimentación y análisis de los resultados.
+    2. Preliminares
+        Aprendizaje No Supervisado
+            Clustering
+                KMeans
+        TinyML
+            Smart tiny Devices
+            Librerías
+            Metodologías
+            ...
+        Aprendizaje online
+            Streaming
+            TinyOL
+        Estado del arte
+            Google Scholar Papers
+            Papers de TinyML: Clustering en Smart Tiny Devices
+    3. Modelo propuesto
+
+    4. Estudio experimental
+        Kmeans -> Kmeans++ -> StreamKM++ -> Nuestra Propuesta
+        Comparación en recursos y precisión…
+    5. Conclusión
+        Conclusiones
+        Trabajos futuros

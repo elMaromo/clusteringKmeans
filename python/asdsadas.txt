@@ -1,0 +1,58 @@
+#streamKmeansArduino( X, numKlusters, forget, learningR, numDimensions ):
+
+def setUpStreamKeans(numKlusters, forget, learningR, numDimensions, currentSerial):
+    # first message to arduino is used to set the hyperparameters of the hardware
+    data = str(numKlusters) + "\n"
+    currentSerial.write(data.encode())
+    data = str(forget) + "\n"
+    currentSerial.write(data.encode())
+    data = str(learningR) + "\n"
+    currentSerial.write(data.encode())
+    data = str(numDimensions) + "\n"
+    currentSerial.write(data.encode())
+
+def writePoint(PointToWrite, currentSerial):
+    #send point to arduino trought serial
+    lenghtPoint = len(PointToWrite)
+    for indexPoint in range(lenghtPoint):
+        data= PointToWrite[indexPoint]
+        data = str(data) + "\n"
+        currentSerial.write(data.encode())
+
+
+def readCentroidFromSerial(currentSerial, numDimensions):
+    # reads value of centroid from the arduino trhought serial
+    newCentroid = np.zeros(numDimensions)
+    for dimensionIndex in range(numDimensions):
+        newCentroidValue = ''
+        while newCentroidValue == '':
+            newCentroidValue = currentSerial.readline().decode('utf-8')
+            newCentroid[dimensionIndex]=float(newCentroidValue)
+    return newCentroid
+
+def streamKmeansArduino( Xi, numKlusters, forget, learningR, numDimensions ):
+    #set up the arduino
+    ser = serial.Serial('COM3', 9600, timeout=1)
+    setUpStreamKeans(numKlusters, forget, learningR, numDimensions, ser)
+
+    #set up the data
+    X = Xi
+    #random.shuffle(X)
+    Y = np.zeros(len(X))
+    centroids = np.zeros((numKlusters, numDimensions))
+    currentPoint = 0
+
+    print(len(X))
+
+    #run the algorithm
+    while currentPoint < len(X):
+        writePoint(X[currentPoint], ser)
+        newY = ''
+        while newY == '':
+            newY = ser.readline().decode('utf-8')
+        Y[currentPoint]=int(newY)
+        centroids[int(newY)] = readCentroidFromSerial(ser, numDimensions)
+        currentPoint = currentPoint + 1
+    
+    #return solution
+    return Y, centroids
